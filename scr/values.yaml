@@ -1,0 +1,9 @@
+namespace:
+  name: scr
+container:
+  image:
+    registry: snlavlacrmasarch.azurecr.io
+    name: qs_reg1
+    version: v1.0
+scr:
+  name: qsreg1

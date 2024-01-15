@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ .Values.scr.name }}
+    workload/class: scr
+  name: {{ .Values.scr.name }}
+  namespace: {{ .Values.namespace.name }}
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.scr.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.scr.name }}
+        app.kubernetes.io/name: {{ .Values.scr.name }}
+        workload/class: scr
+    spec:
+      containers:
+      - env:
+        - name: LD_LIBRARY_PATH
+          value: /opt/scr/viya/home/SASFoundation/utilities/bin:/opt/scr/viya/home/SASFoundation/sasexe:/usr/lib64:/usr/lib/oracle/19.13/client64/lib
+        - name: ORACLE_HOME
+          value: /usr/lib/oracle/19.13/client64
+        - name: SAS_SCR_JSON_STRIP_TRAILING_UNDERSCORE
+          value: 'false'
+        - name: SAS_SCR_JSON_REQUIRE_MISSING_INPUT
+          value: 'true'
+        image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.version }}
+        imagePullPolicy: Always
+        name: {{ .Values.scr.name }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 250m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /opt/scr/secrets/db
+          name: scr-oracle-secrets
+      nodeSelector:
+        agentpool: scr
+      tolerations:
+      - effect: NoSchedule
+        key: workload.sas.com/class
+        operator: Equal
+        value: scr
+      volumes:
+      - name: scr-oracle-secrets
+        secret:
+          items:
+          - key: db.secrets
+            path: db.secrets
+          secretName: {{ .Values.scr.name }}-v1.0-connectstring
