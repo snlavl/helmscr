@@ -4,11 +4,11 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/name: {{ .Values.scr.name }}
-    workload/class: scr
+    workload/class: {{ .Values.deployment.workloadclass }}
   name: {{ .Values.scr.name }}
   namespace: {{ .Values.namespace.name }}
 spec:
-  replicas: 4
+  replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Values.scr.name }}
@@ -17,7 +17,7 @@ spec:
       labels:
         app: {{ .Values.scr.name }}
         app.kubernetes.io/name: {{ .Values.scr.name }}
-        workload/class: scr
+        workload/class: {{ .Values.deployment.workloadclass }}
     spec:
       containers:
       - env:
@@ -52,7 +52,7 @@ spec:
       - effect: NoSchedule
         key: workload.sas.com/class
         operator: Equal
-        value: scr
+        value: {{ .Values.deployment.workloadclass }}
       volumes:
       - name: scr-oracle-secrets
         secret:

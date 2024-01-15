@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: 'snlavlcde.sas.com'
+  - host: {{ .Values.ingress.host.name }}
     http:
       paths:
       - backend:

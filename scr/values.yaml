@@ -1,5 +1,8 @@
 namespace:
   name: scr
+deployment:
+  workloadclass: scr
+  replicas: 2
 container:
   image:
     registry: snlavlacrmasarch.azurecr.io
@@ -7,3 +10,6 @@ container:
     version: v1.0
 scr:
   name: qsreg1
+ingress:
+  host:
+    name: snlavlcde.sas.com
