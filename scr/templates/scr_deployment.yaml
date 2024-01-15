@@ -29,7 +29,7 @@ spec:
           value: 'false'
         - name: SAS_SCR_JSON_REQUIRE_MISSING_INPUT
           value: 'true'
-        image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.version }}
+        image: {{ .Values.container.image.registry }}/{{ .Values.container.image.name }}:{{ .Values.container.image.version }}
         imagePullPolicy: Always
         name: {{ .Values.scr.name }}
         ports:
