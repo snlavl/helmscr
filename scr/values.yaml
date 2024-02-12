@@ -12,4 +12,4 @@ scr:
   name: qsreg1
 ingress:
   host:
-    name: snlavlcde.sas.com
+    name: argocd.javv.nl
