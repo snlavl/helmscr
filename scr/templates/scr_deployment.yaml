@@ -60,3 +60,4 @@ spec:
           - key: db.secrets
             path: db.secrets
           secretName: {{ .Values.scr.name }}-v1.0-connectstring
+          
