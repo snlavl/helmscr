@@ -1,0 +1,15 @@
+namespace:
+  name: scr
+deployment:
+  workloadclass: scr
+  replicas: 3
+container:
+  image:
+    registry: snlavlacrmasarch.azurecr.io
+    name: qs_tree1
+    version: v1.0
+scr:
+  name: qstree1
+ingress:
+  host:
+    name: argocd.javv.nl
